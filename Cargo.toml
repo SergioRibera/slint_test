@@ -19,14 +19,21 @@ panic = 'abort'
 opt-level = 3
 codegen-units = 1
 
+[lib]
+crate-type = ["lib", "cdylib"]
+
 [workspace.dependencies]
 slint = { version = "1.13.1", default-features = false, features = [
     "compat-1-2",
     "backend-winit",
     "renderer-winit-skia",
-    "unstable-winit-030",
 ] }
 
+[target.'cfg(target_os = "android")'.dependencies]
+slint = { workspace = true, features = ["backend-android-activity-06"] }
+
+[target.'cfg(not(target_os = "android"))'.dependencies]
+slint = { workspace = true, features = ["unstable-winit-030"] }
+
 [dependencies]
-slint.workspace = true
 ui = { path = "./crates/ui" }
