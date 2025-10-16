@@ -1,10 +1,32 @@
 [package]
 name = "slint_test"
 version = "0.1.0"
+authors = ["Sergio Ribera <contact@sergioribera.rs>"]
+license = "MIT OR Apache-2.0"
 edition = "2024"
 
-[dependencies]
-slint = { version = "1.12", default-features = false, features = ["accessibility", "backend-winit", "compat-1-2", "renderer-femtovg"] }
+[workspace]
+members = ["crates/ui"]
 
-[build-dependencies]
-slint-build = "1.12"
+[profile.dev]
+opt-level = 1
+incremental = true
+
+[profile.release]
+strip = true
+lto = "thin"
+panic = 'abort'
+opt-level = 3
+codegen-units = 1
+
+[workspace.dependencies]
+slint = { version = "1.13.1", default-features = false, features = [
+    "compat-1-2",
+    "backend-winit",
+    "renderer-winit-skia",
+    "unstable-winit-030",
+] }
+
+[dependencies]
+slint.workspace = true
+ui = { path = "./crates/ui" }

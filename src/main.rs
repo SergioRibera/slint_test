@@ -1,4 +1,4 @@
-slint::include_modules!();
+use ui::*;
 
 pub fn main() {
     let main_window = MainWindow::new().unwrap();
@@ -10,7 +10,6 @@ pub fn main() {
 
 mod virtual_keyboard {
     use super::*;
-    use slint::*;
 
     pub fn init(app: &MainWindow) {
         let weak = app.as_weak();
